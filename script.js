@@ -1,4 +1,4 @@
-document.getElementById('event-name').textContent = "TEST UFC Event";
+document.getElementById('event-name').textContent = "UFC countdown demo";
 let time = 10; // 10 seconds countdown for quick test
 const countdownEl = document.getElementById('countdown');
 

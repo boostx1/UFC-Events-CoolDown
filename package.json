@@ -1,8 +1,8 @@
 {
-  "name": "ufc_timer",
+  "name": "ufc-event-countdown",
   "version": "1.0.0",
-  "description": "UFC Countdown Timer - Instructions",
-  "main": "script.js",
+  "description": "UFC countdown demo and event listing API.",
+  "main": "server.js",
   "dependencies": {
     "accepts": "^2.0.0",
     "asynckit": "^0.4.0",
