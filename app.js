@@ -126,7 +126,6 @@ function getRelativeBadgeText(cd) {
   if (cd.status === 'live') return 'LIVE NOW';
   if (cd.days === 0) return 'TODAY';
   if (cd.days === 1) return 'TOMORROW';
-  if (cd.days <= 7) return `IN ${cd.days} DAYS`;
   return `IN ${cd.days} DAYS`;
 }
 
