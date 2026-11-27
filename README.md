@@ -1,9 +1,9 @@
 # Fight Night Countdown
 
-[![Auto-Sync Combat Sports Events](https://github.com/boostx1/fight-night-countdown/actions/workflows/sync-events.yml/badge.svg)](https://github.com/boostx1/fight-night-countdown/actions/workflows/sync-events.yml)
-[![Deploy to GitHub Pages](https://github.com/boostx1/fight-night-countdown/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/boostx1/fight-night-countdown/actions/workflows/deploy-pages.yml)
+[![Auto-Sync Combat Sports Events](https://github.com/megarom02/fight-night-countdown/actions/workflows/sync-events.yml/badge.svg)](https://github.com/megarom02/fight-night-countdown/actions/workflows/sync-events.yml)
+[![Deploy to GitHub Pages](https://github.com/megarom02/fight-night-countdown/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/megarom02/fight-night-countdown/actions/workflows/deploy-pages.yml)
 
-**Live Demo:** [boostx1.github.io/fight-night-countdown](https://boostx1.github.io/fight-night-countdown/)
+**Live Demo:** [megarom02.github.io/fight-night-countdown](https://megarom02.github.io/fight-night-countdown/)
 
 A live, self-updating countdown tracker for every upcoming **UFC**, **PFL**, **RAF Wrestling**, and **Bare Knuckle FC (BKFC)** event — sorted strictly in chronological order with official posters, venues, and ticking **Days : Hours : Minutes : Seconds** timers.
 
