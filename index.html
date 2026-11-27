@@ -1,15 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>UFC Event Countdown</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fight Night Countdown — UFC, PFL, RAF Wrestling &amp; Bare Knuckle FC</title>
+  <meta
+    name="description"
+    content="Live chronological countdown timers, official posters, venues, and auto-updated schedules for UFC, PFL, RAF Wrestling, and Bare Knuckle FC (BKFC) events."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <h1 id="event-name">UFC countdown demo</h1>
-    <div id="countdown">--</div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a href="#" class="brand" aria-label="Fight Night Countdown Home">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 28 28" width="26" height="26" fill="none">
+            <polygon
+              points="9,2 19,2 26,9 26,19 19,26 9,26 2,19 2,9"
+              stroke="currentColor"
+              stroke-width="2.2"
+              fill="rgba(210,10,10,0.16)"
+            />
+            <circle cx="14" cy="14" r="4" fill="#d20a0a" />
+          </svg>
+        </span>
+        <span class="brand__text">
+          <span class="brand__title">FIGHT NIGHT COUNTDOWN</span>
+          <span class="brand__sub">UFC &middot; PFL &middot; RAF Wrestling &middot; BKFC</span>
+        </span>
+      </a>
+
+      <div class="topbar__actions">
+        <div class="sync-pill" id="syncStatusPill" title="Automatic publisher sync status">
+          <span class="sync-pill__dot" id="syncDot"></span>
+          <span class="sync-pill__text" id="syncStatusText">Loading schedule...</span>
+        </div>
+
+        <label class="tz-select-wrap" aria-label="Select display timezone">
+          <span class="tz-select-label">TZ</span>
+          <select id="timezoneSelect" class="tz-select">
+            <option value="local">Local Time</option>
+            <option value="America/New_York">US Eastern (ET)</option>
+            <option value="Europe/Stockholm">Central Europe (CET)</option>
+            <option value="UTC">UTC</option>
+          </select>
+        </label>
+
+        <button type="button" id="syncNowBtn" class="btn btn--ghost btn--sm" title="Fetch latest announcements from publishers">
+          <svg class="icon-spin-target" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-2.64-6.36" />
+            <polyline points="21 3 21 9 15 9" />
+          </svg>
+          <span>Sync Now</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main-content">
+    <!-- Hero Next-Up Countdown Spotlight -->
+    <section id="heroSection" class="hero" aria-label="Next Upcoming Event Countdown">
+      <div class="hero__skeleton">Loading next fight night...</div>
+    </section>
+
+    <!-- Controls: Promotion Filters, Search, View Switcher -->
+    <section class="controls-bar" aria-label="Filter and search events">
+      <div class="filter-pills" id="filterPills" role="tablist" aria-label="Filter by promotion">
+        <!-- Populated dynamically -->
+      </div>
+
+      <div class="controls-right">
+        <div class="search-box">
+          <svg class="search-box__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input
+            type="search"
+            id="searchInput"
+            class="search-box__input"
+            placeholder="Search fighter, event, city, venue..."
+            autocomplete="off"
+          />
+          <button type="button" id="clearSearchBtn" class="search-box__clear hidden" aria-label="Clear search">&times;</button>
+        </div>
+
+        <div class="view-toggle" role="group" aria-label="Switch layout view">
+          <button type="button" class="view-toggle__btn active" data-view="grid" aria-pressed="true" title="Poster Grid View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1" />
+              <rect x="14" y="3" width="7" height="7" rx="1" />
+              <rect x="3" y="14" width="7" height="7" rx="1" />
+              <rect x="14" y="14" width="7" height="7" rx="1" />
+            </svg>
+            <span>Grid</span>
+          </button>
+          <button type="button" class="view-toggle__btn" data-view="timeline" aria-pressed="false" title="Chronological Timeline View">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <circle cx="3.5" cy="6" r="1.5" fill="currentColor" />
+              <circle cx="3.5" cy="12" r="1.5" fill="currentColor" />
+              <circle cx="3.5" cy="18" r="1.5" fill="currentColor" />
+            </svg>
+            <span>Timeline</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule Summary Strip -->
+    <div class="schedule-meta">
+      <p class="schedule-meta__summary" id="scheduleSummary">Loading upcoming schedule...</p>
+      <p class="schedule-meta__note">Sorted strictly chronologically &middot; All timers tick live</p>
+    </div>
+
+    <!-- Chronological Events Container -->
+    <section id="eventsContainer" class="events-section" aria-label="Upcoming Events Schedule">
+      <!-- Populated dynamically -->
+    </section>
+  </main>
+
+  <!-- Official Publisher Feed Status Footer -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__info">
+        <div class="footer__heading">Official Auto-Synced Sources</div>
+        <p class="footer__desc">
+          Automatically checks official publisher schedules every 6 hours via GitHub Actions (and live on demand) so newly announced fight cards, posters, and venues appear automatically.
+        </p>
+      </div>
+      <div class="source-badges" id="sourceBadges">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </footer>
+
+  <!-- Event Detail Modal -->
+  <div id="eventModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal__backdrop" data-close-modal="true"></div>
+    <div class="modal__dialog">
+      <button type="button" class="modal__close" id="modalCloseBtn" aria-label="Close event details">&times;</button>
+      <div id="modalBody" class="modal__body"></div>
+    </div>
   </div>
-  <script src="script.js" type="module"></script>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>
